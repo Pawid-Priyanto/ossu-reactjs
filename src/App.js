@@ -64,15 +64,45 @@ import Footer from './footer'
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-  setTimeout(
-    () => setCounter(counter + 1),
-    1000
-  )
+  // setTimeout(
+  //   () => setCounter(counter + 1),
+  //   1000
+  // )
+  const handleClickPlus = () => {
+    setCounter(counter + 1)
+  }
 
-  console.log('rendering...', counter)
+  const handleClickMinus = () => {
+    setCounter(counter -1)
+  }
+
+  const reset = () => {
+    setCounter(0)
+  }
+
+  // console.log('rendering...', counter)
 
   return (
+    <>
+    <Display counter={counter}/>
+   <Button onClick={handleClickMinus} text="minus"/>
+   <Button onClick={reset} text="reset"/>
+   <Button onClick={handleClickPlus} text="plus"/>
+    </>
+  )
+}
+
+// display component
+const Display = ({counter}) => {
+  return (
     <div>{counter}</div>
+  )
+}
+
+// button components
+const Button = ({onClick, text}) => {
+  return(
+    <button onClick={onClick}>{text}</button>
   )
 }
 
