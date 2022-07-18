@@ -1,108 +1,59 @@
 import React, {useState} from 'react';
-import Hello from './hello';
-import Footer from './footer'
-
-// const App = () => {
-//   console.log('halo dari komponen')
-
-//   const name = 'Jhon';
-//   const age = 20;
-//   const course = 'Half Stack application deveelopment';
-//   const part1 = 'Fundamentals of React'
-//   const exercises1 = 10
-//   const part2 = 'Using props to pass data'
-//   const exercises2 = 7
-//   const part3 = 'State of a component'
-//   const exercises3 = 14
-
-//   return (
-//     <div>
-//       <h1>{course}</h1>
-//       <p>
-//         {part1} {exercises1}
-//       </p>
-//       <p>
-//         {part2} {exercises2}
-//       </p>
-//       <p>
-//         {part3} {exercises3}
-//       </p>
-//       <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
-//     </div>
-//   )
-
-  // const now = new Date();
-  // const a = 10;
-  // const b = 20;
-  // return (
-  //     <div>
-  //         <p>Hello World, is is {now.toString()}</p>
-  //         <p>{a} plus {b} is {a +b}</p>
-  //     </div>
-  //     )
-
-  // jsx
-  // return React.createElement(
-  //   'div', null,
-  //    React.createElement(
-  //      'p', null, 'Haloo world it is ', now.toISOString()),
-  //    React.createElement('p', null, a, ' plus ', b, ' is ', a+b),
-
-  // )
-
-  // return(
-  //   <div>
-  //     <h1>Greetings</h1>
-  //     <Hello name="rudi"age={2 + age}/>
-  //     <Hello name="salim"age={27}/>
-  //     <Hello name={name}age={age}/>
-  //     <Hello name="william"age={age + 21}/>
-  //     <Footer/> 
-  //   </div>
-  // )
-// }
+import './App.css'
 const App = () => {
-  const [ counter, setCounter ] = useState(0)
+  // const [left, setLeft] = useState(0)
+  // const [right, setRight] = useState(0)
+  const [clicks, setClicks] = useState({
+    left: 0,
+    right: 0
+  })
 
-  // setTimeout(
-  //   () => setCounter(counter + 1),
-  //   1000
-  // )
-  const handleClickPlus = () => {
-    setCounter(counter + 1)
+  const handleClickLeft = () => {
+    // cara 1
+      // const newClicks = {
+      //   left: clicks.left + 1,
+      //   right: clicks.right
+      // } 
+      // setClicks(newClicks)
+      
+      /**cara 2 */
+      // const newClicks = {
+      //   ...clicks, left: clicks.left + 1
+      // }
+      // setClicks(newClicks)
+      setClicks({...clicks, left: clicks.left + 1})
   }
 
-  const handleClickMinus = () => {
-    setCounter(counter -1)
+  const handleClickRight = () => {
+    // cara 1
+    // const newClicks = {
+    //   left: clicks.left,
+    //   right: clicks.right + 1
+    // }
+    // setClicks(newClicks)
+
+    /**cara 2 */
+    // const newClicks = {
+    //   ...clicks, right: clicks.right + 1
+    // }
+    // setClicks(newClicks)
+
+    setClicks({...clicks, right: clicks.right + 1})
   }
 
-  const reset = () => {
-    setCounter(0)
-  }
-
-  // console.log('rendering...', counter)
-
-  return (
-    <>
-    <Display counter={counter}/>
-   <Button onClick={handleClickMinus} text="minus"/>
-   <Button onClick={reset} text="reset"/>
-   <Button onClick={handleClickPlus} text="plus"/>
-    </>
-  )
-}
-
-// display component
-const Display = ({counter}) => {
-  return (
-    <div>{counter}</div>
-  )
-}
-
-// button components
-const Button = ({onClick, text}) => {
   return(
-    <button onClick={onClick}>{text}</button>
+    <div className="App-header">
+      <div className='box-btn'>
+      {clicks.left}
+      <button className='btn-app' onClick={handleClickLeft}>
+        left
+      </button>
+      <button className='btn-app' onClick={handleClickRight}>
+        right
+      </button>
+      {clicks.right}
+      </div>
+    </div>
   )
 }
 
