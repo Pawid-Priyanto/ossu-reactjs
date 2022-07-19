@@ -1,90 +1,45 @@
 import React, {useState} from 'react';
-import './App.css'
-const App = () => {
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  // const [clicks, setClicks] = useState({
-  //   left: 0,
-  //   right: 0
-  // })
-  const [allClicks, setAll] = useState([])
+import Note from './Note'
+const App = (props) => {
 
-  const handleClickLeft = () => {
-    // cara 1
-      // const newClicks = {
-      //   left: clicks.left + 1,
-      //   right: clicks.right
-      // } 
-      // setClicks(newClicks)
-      
-      /**cara 2 */
-      // const newClicks = {
-      //   ...clicks, left: clicks.left + 1
-      // }
-      // setClicks(newClicks)
-      // setClicks({...clicks, left: clicks.left + 1})
-      // setAll(allClicks.concat('L'))
-      allClicks.push('L')
-      setLeft(left + 1)
+  const [notes, setNotes] = useState(props.notes)
+  const [newNote, setNewNote] = useState('')
+  const [showAll, setShowAll] = useState(true)
+
+  const noteToShow = showAll ? notes : notes.filter(note => note.important === true)
+
+  const addNote = (e) => {
+    e.preventDefault()
+
+    const noteObject ={
+      content: newNote,
+      date: new Date().toISOString(),
+      important: Math.random < 0.5,
+      id: notes.lenght + 1
+    }
+
+    setNotes(notes.concat(noteObject))
+    setNewNote('')
   }
-
-  const handleClickRight = () => {
-    // cara 1
-    // const newClicks = {
-    //   left: clicks.left,
-    //   right: clicks.right + 1
-    // }
-    // setClicks(newClicks)
-
-    /**cara 2 */
-    // const newClicks = {
-    //   ...clicks, right: clicks.right + 1
-    // }
-    // setClicks(newClicks)
-
-    // setClicks({...clicks, right: clicks.right + 1})
-    setAll(allClicks.concat('R'))
-    setRight(right+1)
-  }
-
-  // debugger
-
-  return(
-    <div className="App-header">
-      <div className='box-btn'>
-      {left}
-      <Button text="left" handleClick={handleClickLeft}/>
-      <Button text="right" handleClick={handleClickRight}/>
-      {right}
-      </div>
-      <History allClicks={allClicks} className="bottom"/>
-    </div>
-  )
-}
-
-const History = (props) => {
-  if(props.allClicks.length === 0){
-    return (
-      <div>
-         the app is used by pressing the buttons
-      </div>
-    )
+  const handleNoteChange = (e) => {
+    setNewNote(e.target.value)
   }
   return(
     <div>
-      button pressed history:{props.allClicks.join(' ')}
+      <h3>Notes</h3>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? 'important' : 'all' }
+        </button>
+      </div>
+      <ul>
+        {noteToShow.map(note => <Note key={note.id} note={note}/>)}      
+      </ul>
+      <form onSubmit={addNote}>
+        <input value={newNote} onChange={handleNoteChange}/>
+        <button type='submit'>Save</button>
+      </form>
     </div>
-  )
-}
-
-const Button = (props) => {
-  console.log(props, 'this is props')
-  const {text, handleClick} = props
-  return(
-  <button onClick={handleClick} className="btn-app">
-    {text}
-  </button>
-
   )
 }
 
