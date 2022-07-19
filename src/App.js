@@ -47,6 +47,8 @@ const App = () => {
     setRight(right+1)
   }
 
+  // debugger
+
   return(
     <div className="App-header">
       <div className='box-btn'>
@@ -75,7 +77,9 @@ const History = (props) => {
   )
 }
 
-const Button = ({handleClick, text}) => {
+const Button = (props) => {
+  console.log(props, 'this is props')
+  const {text, handleClick} = props
   return(
   <button onClick={handleClick} className="btn-app">
     {text}
